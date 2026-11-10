@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1e63">
+  <title>Absensi SMK Mandiri Haurgeulis</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <img src="./logo.png" alt="Logo SMK Mandiri Haurgeulis" class="logo">
+        <div><strong>SMK MANDIRI</strong><span>HAURGEULIS · ABSENSI ONLINE</span></div>
+      </div>
+      <button id="logoutBtn" class="button button-ghost hidden" type="button">Keluar</button>
+    </header>
+
+    <main>
+      <section id="loginPanel" class="panel auth-panel">
+        <div class="hero">
+          <img src="./logo.png" alt="" class="hero-logo">
+          <p class="eyebrow">SISTEM ABSENSI DIGITAL</p>
+          <h1>Selamat datang</h1>
+          <p class="muted">Pilih jenis akun untuk melanjutkan.</p>
+        </div>
+
+        <div class="role-choices">
+          <button class="role-choice" type="button" data-entry-role="guru"><span class="role-icon">👩‍🏫</span><strong>Guru</strong><small>Absensi guru</small></button>
+          <button class="role-choice" type="button" data-entry-role="admin"><span class="role-icon">🛡️</span><strong>Admin</strong><small>Kelola absensi</small></button>
+        </div>
+
+        <div id="authForms" class="auth-forms hidden">
+          <div class="form-heading">
+            <button id="backRoleBtn" class="back-button" type="button">← Kembali</button>
+            <span id="chosenRoleLabel" class="pill">Login</span>
+          </div>
+          <form id="loginForm" class="form-stack">
+            <label>Email<input id="email" type="email" autocomplete="username" required placeholder="nama@email.com"></label>
+            <label>Kata sandi<input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Minimal 6 karakter"></label>
+            <button class="button button-primary" type="submit">Masuk</button>
+            <p id="loginMsg" class="message" aria-live="polite"></p>
+            <button id="showRegisterBtn" class="text-button" type="button">Belum punya akun? Daftar</button>
+          </form>
+
+          <form id="registerForm" class="form-stack hidden">
+            <h2>Buat akun</h2>
+            <label>Nama lengkap<input id="registerName" autocomplete="name" required maxlength="100" placeholder="Nama sesuai identitas"></label>
+            <label>Email<input id="registerEmail" type="email" autocomplete="email" required placeholder="nama@email.com"></label>
+            <label>Kata sandi<input id="registerPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Minimal 6 karakter"></label>
+            <input id="registerRole" type="hidden" value="guru">
+<p id="teacherNotice" class="notice hidden">Pendaftaran guru perlu disetujui admin sebelum akun dapat digunakan.</p>
+            <button class="button button-primary" type="submit">Daftar</button>
+            <p id="registerMsg" class="message" aria-live="polite"></p>
+            <button id="backLoginBtn" class="text-button" type="button">Sudah punya akun? Login</button>
+          </form>
+        </div>
+        <p class="footer-note">© <span id="year"></span> SMK Mandiri Haurgeulis</p>
+      </section>
+
+      <section id="appPanel" class="hidden">
+        <div class="welcome-row">
+          <div><p class="eyebrow">DASHBOARD</p><h1 id="hello">Halo!</h1><p id="today" class="muted"></p></div>
+          <span id="rolePill" class="pill"></span>
+        </div>
+        <p id="globalMsg" class="message" aria-live="polite"></p>
+
+        <section id="userPanel" class="panel hidden">
+          <div class="section-heading"><div><p class="eyebrow">ABSENSI HARIAN</p><h2>Data diri & kehadiran</h2></div><span class="live-dot">● Online</span></div>
+          <div class="profile-grid">
+            <div class="profile-info">
+              <div class="avatar" id="profileInitial">SM</div>
+              <div><strong id="profileName">Nama pengguna</strong><p id="profileDetails" class="muted"></p></div>
+            </div>
+            <div class="form-stack compact">
+              <label>Keterangan<select id="statusSelect"><option value="Hadir">Hadir</option><option value="Sakit">Sakit</option><option value="Izin">Izin</option></select></label>
+              <label>Catatan (opsional)<textarea id="note" rows="2" maxlength="300" placeholder="Contoh: izin keperluan keluarga"></textarea></label>
+            </div>
+          </div>
+          <div class="photo-box">
+            <div class="photo-heading"><div><h3>Foto absensi</h3><p class="muted">Ambil foto terbaru sebelum menyimpan.</p></div><span class="photo-badge">Wajib</span></div>
+            <video id="camera" autoplay playsinline class="camera hidden"></video>
+            <img id="photoPreview" class="photo-preview hidden" alt="Pratinjau foto absensi">
+            <canvas id="photoCanvas" class="hidden"></canvas>
+            <div class="photo-actions"><button id="startCameraBtn" class="button button-secondary" type="button">Aktifkan kamera</button><button id="takePhotoBtn" class="button button-secondary hidden" type="button">Ambil foto</button><button id="retakePhotoBtn" class="button button-ghost hidden" type="button">Foto ulang</button></div>
+            <p id="photoMsg" class="message"></p>
+          </div>
+          <div class="attendance-actions">
+            <button id="submitAttendance" class="button button-primary" type="button">Simpan absensi</button>
+            <button id="checkInBtn" class="button button-primary hidden" type="button">Absen masuk</button>
+            <button id="checkOutBtn" class="button button-secondary hidden" type="button">Absen pulang</button>
+          </div>
+          <div class="status-card"><span class="status-dot"></span><div><strong>Status hari ini</strong><p id="userStatus" class="muted">Belum mengisi absensi hari ini.</p></div></div>
+          <p class="smallprint">Status Hadir membutuhkan GPS dalam radius 100 meter dari titik sekolah dan akurasi GPS maksimal 50 meter. Sakit/izin dapat diisi dari mana saja.</p>
+        </section>
+
+        <section id="adminPanel" class="hidden">
+          <div class="stats-grid">
+            <div class="stat-card"><span>Total absensi bulan dipilih</span><strong id="countTotal">0</strong></div>
+            <div class="stat-card"><span>Hadir</span><strong id="countPresent">0</strong></div>
+            <div class="stat-card"><span>Sakit / Izin</span><strong id="countOther">0</strong></div>
+          </div>
+
+          <section class="panel">
+            <div class="section-heading"><div><p class="eyebrow">PERSETUJUAN AKUN</p><h2>Pendaftaran guru</h2></div><span id="pendingCount" class="pill">0 menunggu</span></div>
+            <div id="pendingTeachers" class="empty-state">Memuat pendaftaran...</div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading"><div><p class="eyebrow">ARSIP BULANAN</p><h2>Riwayat absensi guru</h2></div><button id="exportBtn" class="button button-secondary" type="button">Unduh CSV</button></div>
+            <div class="filters">
+              <label>Bulan riwayat<input id="filterMonth" type="month"></label>
+              <label>Status<select id="filterStatus"><option value="">Semua status</option><option>Hadir</option><option>Sakit</option><option>Izin</option></select></label>
+              <label>Cari nama/email<input id="searchName" type="search" placeholder="Ketik nama..."></label>
+            </div>
+            <div class="records-section"><h3>Guru</h3><div id="teacherRecords" class="record-list"></div></div>
+            
+            <p class="smallprint">Waktu menggunakan zona WIB. Foto disimpan bersama catatan absensi.</p>
+          </section>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">Dibuat untuk SMK Mandiri Haurgeulis · <span id="footerYear"></span></footer>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+  </html>
+  
