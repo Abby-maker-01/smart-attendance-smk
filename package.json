@@ -1,0 +1,16 @@
+{
+  "name": "absensi-smk-mandiri-haurgeulis",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Recovered and updated web source for the SMK Mandiri attendance app",
+  "scripts": {
+    "start": "npx serve www"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  }
+}
