@@ -1,0 +1,9 @@
+{
+  "name": "Absensi SMK Mandiri Haurgeulis",
+  "short_name": "Absensi SMK",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f6fc",
+  "theme_color": "#0b1e63",
+  "icons": []
+}
